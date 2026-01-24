@@ -1,0 +1,18 @@
+debug: false
+
+spring:
+    application:
+        name: WebConsumer
+    rabbitmq:
+        host: puffin.rmq2.cloudamqp.com
+        port: 5672
+        username: htcdtztc
+        password: Ale4fZqeWyB0a3LkTXirce8yylWbz1hI
+        virtual-host: htcdtztc
+
+rabbit-mq:
+    default:
+        exchange: binance.webconsumer.exchange
+    consumer:
+        queue: binance.webconsumer.queue
+        routing-key: trade.key
