@@ -9,6 +9,18 @@ spring:
         username: htcdtztc
         password: Ale4fZqeWyB0a3LkTXirce8yylWbz1hI
         virtual-host: htcdtztc
+    datasource:
+        url: jdbc:postgresql://ep-aged-moon-a1bpj2gh-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+        driver-class-name: org.postgresql.Driver
+        username: neondb_owner
+        password: npg_IWzihr8OK6Ja
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
 
 rabbit-mq:
     default:
