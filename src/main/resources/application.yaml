@@ -2,7 +2,7 @@ debug: false
 
 spring:
     application:
-        name: WebConsumer
+        name: PastData
     rabbitmq:
         host: puffin.rmq2.cloudamqp.com
         port: 5672
