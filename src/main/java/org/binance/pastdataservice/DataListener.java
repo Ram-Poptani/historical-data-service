@@ -3,6 +3,9 @@ package org.binance.pastdataservice;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import jakarta.annotation.PreDestroy;
 import lombok.Getter;
 import org.binance.pastdataservice.model.dto.request.CreateTradeDto;
@@ -20,7 +23,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class DataListener {
 
     private static final int BATCH_SIZE = 100;
@@ -30,6 +32,9 @@ public class DataListener {
     private final TradeService tradeService;
     private final ConcurrentLinkedQueue<CreateTradeDto> buffer = new ConcurrentLinkedQueue<>();
 
+    private final Counter tradesReceivedCounter;
+    private final Timer batchInsertTimer;
+
     // Health tracking fields
     @Getter
     private volatile Instant lastBatchTime;
@@ -37,6 +42,25 @@ public class DataListener {
     private final AtomicLong totalTradesReceived = new AtomicLong(0);
     @Getter
     private final AtomicLong totalBatchesInserted = new AtomicLong(0);
+
+
+    public DataListener(
+            JsonMapper jsonMapper,
+            ObjectMapper objectMapper,
+            TradeService tradeService,
+            MeterRegistry meterRegistry
+    ) {
+        this.jsonMapper = jsonMapper;
+        this.objectMapper = objectMapper;
+        this.tradeService = tradeService;
+        this.tradesReceivedCounter = Counter.builder("pastdata.trades.received")
+                .description("Total trades received from RabbitMQ")
+                .register(meterRegistry);
+        this.batchInsertTimer = Timer.builder("pastdata.batch.insert")
+                .description("Time taken for batch DB inserts")
+                .register(meterRegistry);
+    }
+
 
     @Transactional
     @RabbitListener(queues = "${rabbit-mq.consumer.queue}")
@@ -47,6 +71,7 @@ public class DataListener {
 
             buffer.add(dto);
             totalTradesReceived.incrementAndGet();
+            tradesReceivedCounter.increment();
 
             if (buffer.size() >= BATCH_SIZE) {
 //                log.info("Buffer reached 100 items, processing batch...");
