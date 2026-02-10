@@ -23,7 +23,7 @@ spring:
     jpa:
         hibernate:
             ddl-auto: update
-        show-sql: true
+        show-sql: false
         properties:
             hibernate:
                 jdbc:
@@ -35,7 +35,6 @@ rabbit-mq:
         exchange: binance.trade.exchange
     consumer:
         queue: binance.db.queue
-
 
 #Observability config
 management:
