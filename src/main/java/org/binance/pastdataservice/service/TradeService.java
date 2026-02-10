@@ -29,7 +29,7 @@ public class TradeService {
                 .map(CreateTradeDto::toEntity)
                 .collect(Collectors.toList());
         tradeRepository.saveAll(trades);
-        log.info("Batch inserted {} trades", trades.size());
+//        log.info("Batch inserted {} trades", trades.size());
     }
 
 

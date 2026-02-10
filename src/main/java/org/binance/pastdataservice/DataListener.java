@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import jakarta.annotation.PreDestroy;
+import lombok.Getter;
 import org.binance.pastdataservice.model.dto.request.CreateTradeDto;
 import org.binance.pastdataservice.service.TradeService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -13,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @Slf4j
@@ -27,18 +30,26 @@ public class DataListener {
     private final TradeService tradeService;
     private final ConcurrentLinkedQueue<CreateTradeDto> buffer = new ConcurrentLinkedQueue<>();
 
+    // Health tracking fields
+    @Getter
+    private volatile Instant lastBatchTime;
+    @Getter
+    private final AtomicLong totalTradesReceived = new AtomicLong(0);
+    @Getter
+    private final AtomicLong totalBatchesInserted = new AtomicLong(0);
+
     @Transactional
     @RabbitListener(queues = "${rabbit-mq.consumer.queue}")
     public void storeData(String data) {
         try {
-
             JsonNode jsonNode = jsonMapper.readTree(data);
             CreateTradeDto dto = objectMapper.treeToValue(jsonNode, CreateTradeDto.class);
 
             buffer.add(dto);
+            totalTradesReceived.incrementAndGet();
 
             if (buffer.size() >= BATCH_SIZE) {
-                log.info("Buffer reached 100 items, processing batch...");
+//                log.info("Buffer reached 100 items, processing batch...");
                 this.flushBuffer();
             }
 
@@ -52,6 +63,12 @@ public class DataListener {
         if (buffer.isEmpty()) return;
         tradeService.insertBatch(buffer.stream().toList());
         buffer.clear();
+        lastBatchTime = Instant.now();
+        totalBatchesInserted.incrementAndGet();
+    }
+
+    public int getBufferSize() {
+        return buffer.size();
     }
 
     @PreDestroy
