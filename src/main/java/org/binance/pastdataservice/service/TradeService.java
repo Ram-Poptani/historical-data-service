@@ -39,8 +39,8 @@ public class TradeService {
             LocalDateTime to,
             String tickSize
     ) {
-        long fromEpoch = from.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long toEpoch = to.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long fromEpoch = from.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
+        long toEpoch = to.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
         long tickSizeMs = parseTickSize(tickSize);
         
         List<Trade> trades = tradeRepository.findBySymbolAndTimeRange(symbol, fromEpoch, toEpoch);
@@ -52,8 +52,17 @@ public class TradeService {
             return Collections.emptyList();
         }
 
-        // Groupping trades
-        Map<Long, List<Trade>> buckets = trades.stream()
+        // Filter out zero-price trades (defensive — may exist from before WebConsumer fix)
+        List<Trade> validTrades = trades.stream()
+                .filter(t -> t.getPrice() > 0 && t.getQuantity() > 0)
+                .toList();
+
+        if (validTrades.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // Grouping trades into time buckets
+        Map<Long, List<Trade>> buckets = validTrades.stream()
                 .collect(Collectors.groupingBy(
                         trade -> (trade.getTradeTime() / tickSizeMs) * tickSizeMs,
                         TreeMap::new,
@@ -70,8 +79,8 @@ public class TradeService {
                     
                     double open = bucketTrades.get(0).getPrice();
                     double close = bucketTrades.get(bucketTrades.size() - 1).getPrice();
-                    double high = bucketTrades.stream().mapToDouble(Trade::getPrice).max().orElse(0);
-                    double low = bucketTrades.stream().mapToDouble(Trade::getPrice).min().orElse(0);
+                    double high = bucketTrades.stream().mapToDouble(Trade::getPrice).max().orElseThrow();
+                    double low = bucketTrades.stream().mapToDouble(Trade::getPrice).min().orElseThrow();
                     double volume = bucketTrades.stream().mapToDouble(Trade::getQuantity).sum();
                     
                     return CandleDto.builder()
