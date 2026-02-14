@@ -18,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -84,10 +86,15 @@ public class DataListener {
         }
     }
 
-    private synchronized void flushBuffer() {
-        if (buffer.isEmpty()) return;
-        tradeService.insertBatch(buffer.stream().toList());
-        buffer.clear();
+    private void flushBuffer() {
+        List<CreateTradeDto> batch = new ArrayList<>(BATCH_SIZE);
+        CreateTradeDto item;
+        while ((item = buffer.poll()) != null) {
+            batch.add(item);
+        }
+        if (batch.isEmpty()) return;
+
+        batchInsertTimer.record(() -> tradeService.insertBatch(batch));
         lastBatchTime = Instant.now();
         totalBatchesInserted.incrementAndGet();
     }
