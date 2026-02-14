@@ -6,6 +6,8 @@ import org.binance.pastdataservice.model.dto.request.CreateTradeDto;
 import org.binance.pastdataservice.model.dto.response.CandleDto;
 import org.binance.pastdataservice.model.entity.Trade;
 import org.binance.pastdataservice.repository.TradeRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ public class TradeService {
         return tradeRepository.save(createTradeDto.toEntity()).getId();
     }
 
+    @CacheEvict(value = "candles", allEntries = true)
     @Transactional
     public void insertBatch(List<CreateTradeDto> dtos) {
         List<Trade> trades = dtos.stream()
@@ -33,6 +36,7 @@ public class TradeService {
     }
 
 
+    @Cacheable(value = "candles", key = "#symbol + '-' + #from.toEpochSecond(ZoneOffset.UTC) + '-' + #to.toEpochSecond(ZoneOffset.UTC) + '-' + #tickSize")
     public List<CandleDto> findBySymbolAndFilters(
             String symbol,
             LocalDateTime from,
