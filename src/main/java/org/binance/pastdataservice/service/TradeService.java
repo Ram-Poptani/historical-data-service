@@ -1,7 +1,14 @@
 package org.binance.pastdataservice.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
 import org.binance.pastdataservice.model.dto.request.CreateTradeDto;
 import org.binance.pastdataservice.model.dto.response.CandleDto;
 import org.binance.pastdataservice.model.entity.Trade;
@@ -11,10 +18,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.*;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -36,7 +41,7 @@ public class TradeService {
     }
 
 
-    @Cacheable(value = "candles", key = "#symbol + '-' + #from.toEpochSecond(ZoneOffset.UTC) + '-' + #to.toEpochSecond(ZoneOffset.UTC) + '-' + #tickSize")
+    @Cacheable(value = "candles", key = "#symbol + '-' + #from.toString() + '-' + #to.toString() + '-' + #tickSize")
     public List<CandleDto> findBySymbolAndFilters(
             String symbol,
             LocalDateTime from,

@@ -1,0 +1,933 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.2)
+
+2026-02-20T13:40:51.215+05:30  INFO 34248 --- [PastData] [           main] o.b.p.PastDataServiceApplication         : Starting PastDataServiceApplication v0.0.1-SNAPSHOT using Java 21.0.7 with PID 34248 (C:\Projects\Backend\Microservices\Java\MarketDataPlatform\PastDataService\target\PastDataService-0.0.1-SNAPSHOT.jar started by KZ835RY in C:\Projects\Backend\Microservices\Java\MarketDataPlatform\PastDataService)
+2026-02-20T13:40:51.222+05:30  INFO 34248 --- [PastData] [           main] o.b.p.PastDataServiceApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-20T13:40:53.469+05:30  INFO 34248 --- [PastData] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-20T13:40:53.605+05:30  INFO 34248 --- [PastData] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 112 ms. Found 1 JPA repository interface.
+2026-02-20T13:40:55.876+05:30  INFO 34248 --- [PastData] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8081 (http)
+2026-02-20T13:40:55.909+05:30  INFO 34248 --- [PastData] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-20T13:40:55.910+05:30  INFO 34248 --- [PastData] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-20T13:40:55.999+05:30  INFO 34248 --- [PastData] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 4666 ms
+2026-02-20T13:40:56.849+05:30  INFO 34248 --- [PastData] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-02-20T13:40:57.121+05:30  INFO 34248 --- [PastData] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-02-20T13:40:58.466+05:30  INFO 34248 --- [PastData] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-20T13:40:58.541+05:30  INFO 34248 --- [PastData] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-20T13:40:59.914+05:30  INFO 34248 --- [PastData] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@305289b3
+2026-02-20T13:40:59.918+05:30  INFO 34248 --- [PastData] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-20T13:41:00.492+05:30  INFO 34248 --- [PastData] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://ep-aged-moon-a1bpj2gh-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 17.8
+	Default catalog/schema: neondb/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-20T13:41:03.723+05:30  INFO 34248 --- [PastData] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-20T13:41:03.734+05:30  INFO 34248 --- [PastData] [           main] org.hibernate.orm.jdbc.batch             : HHH100501: Automatic JDBC statement batching enabled (maximum batch size 100)
+2026-02-20T13:41:04.343+05:30  INFO 34248 --- [PastData] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-20T13:41:04.572+05:30  INFO 34248 --- [PastData] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-20T13:41:05.954+05:30  INFO 34248 --- [PastData] [           main] o.b.p.config.RabbitMQConfig              : Creating FanoutExchange: binance.trade.exchange
+2026-02-20T13:41:05.957+05:30  INFO 34248 --- [PastData] [           main] o.b.p.config.RabbitMQConfig              : Creating Queue: binance.db.queue
+2026-02-20T13:41:05.960+05:30  INFO 34248 --- [PastData] [           main] o.b.p.config.RabbitMQConfig              : Binding Queue 'binance.db.queue' to FanoutExchange 'binance.trade.exchange'
+2026-02-20T13:41:06.035+05:30  WARN 34248 --- [PastData] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-20T13:41:07.753+05:30  INFO 34248 --- [PastData] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoints beneath base path '/actuator'
+2026-02-20T13:41:07.943+05:30  INFO 34248 --- [PastData] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8081 (http) with context path '/'
+2026-02-20T13:41:07.948+05:30  INFO 34248 --- [PastData] [           main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-20T13:41:08.077+05:30  INFO 34248 --- [PastData] [           main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3b5950f:0/SimpleConnection@32fc8a41 [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=60344]
+2026-02-20T13:41:08.297+05:30  INFO 34248 --- [PastData] [           main] o.b.p.PastDataServiceApplication         : Started PastDataServiceApplication in 17.993 seconds (process running for 19.764)
+2026-02-20T13:41:13.512+05:30  INFO 34248 --- [PastData] [nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-20T13:41:13.513+05:30  INFO 34248 --- [PastData] [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-20T13:41:13.515+05:30  INFO 34248 --- [PastData] [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-02-20T17:11:07.797+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@323c0db8 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T17:44:43.712+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2facd255 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T19:34:55.565+05:30  WARN 34248 --- [PastData] [06.140.228:5672] c.r.c.impl.ForgivingExceptionHandler     : An unexpected connection driver error occurred (Exception message: Connection reset)
+2026-02-20T19:34:56.665+05:30  WARN 34248 --- [PastData] [ntContainer#0-1] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+com.rabbitmq.client.ShutdownSignalException: connection error
+	at com.rabbitmq.client.impl.AMQConnection.startShutdown(AMQConnection.java:1014) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.shutdown(AMQConnection.java:1004) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.handleFailure(AMQConnection.java:808) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.access$500(AMQConnection.java:49) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:703) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291) ~[na:na]
+	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:325) ~[na:na]
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:312) ~[na:na]
+	at java.base/java.io.DataInputStream.readUnsignedByte(DataInputStream.java:295) ~[na:na]
+	at com.rabbitmq.client.impl.Frame.readFrom(Frame.java:92) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.SocketFrameHandler.readFrame(SocketFrameHandler.java:199) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:694) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	... 1 common frames omitted
+
+2026-02-20T19:34:57.252+05:30  INFO 34248 --- [PastData] [ntContainer#0-1] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@fe8344c: tags=[[amq.ctag-D0VpBYSAt8bt5jof9qpGDQ]], channel=Cached Rabbit Channel: AMQChannel(amqp://htcdtztc@15.206.140.228:5672/htcdtztc,1), conn: Proxy@160e6384 Shared Rabbit Connection: SimpleConnection@32fc8a41 [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=60344], acknowledgeMode=AUTO local queue size=0
+2026-02-20T19:34:57.810+05:30  INFO 34248 --- [PastData] [ntContainer#0-2] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-20T19:34:58.035+05:30 ERROR 34248 --- [PastData] [ntContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: No such host is known (puffin.rmq2.cloudamqp.com)
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createBareChannel(CachingConnectionFactory.java:682) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getCachedChannelProxy(CachingConnectionFactory.java:655) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getChannel(CachingConnectionFactory.java:544) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory$ChannelCachingConnectionProxy.createChannel(CachingConnectionFactory.java:1509) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2243) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2213) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2193) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueInfo(RabbitAdmin.java:472) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueProperties(RabbitAdmin.java:456) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.attemptDeclarations(AbstractMessageListenerContainer.java:1959) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.redeclareElementsIfNecessary(AbstractMessageListenerContainer.java:1923) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1523) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: No such host is known (puffin.rmq2.cloudamqp.com)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method) ~[na:na]
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52) ~[na:na]
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211) ~[na:na]
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828) ~[na:na]
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 15 common frames omitted
+
+2026-02-20T19:34:58.098+05:30  INFO 34248 --- [PastData] [ntContainer#0-2] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-20T20:47:49.870+05:30  WARN 34248 --- [PastData] [ntContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-20T20:47:50.195+05:30  INFO 34248 --- [PastData] [ntContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@1551158e: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-20T20:47:50.501+05:30  INFO 34248 --- [PastData] [ntContainer#0-3] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-20T20:47:51.298+05:30 ERROR 34248 --- [PastData] [ntContainer#0-3] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-20T20:47:51.684+05:30  INFO 34248 --- [PastData] [ntContainer#0-3] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-20T20:47:54.166+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@54bd7f01 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.223+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h50m39s203ms69µs200ns).
+2026-02-20T20:47:54.285+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@460f6344 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.319+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@797549f3 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.357+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@745c2efd (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.472+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1e906674 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.485+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@233823a1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.544+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7051cce4 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.632+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@656f2fd5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.697+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@78d146ca (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:54.715+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1a16475a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-20T20:47:57.091+05:30  WARN 34248 --- [PastData] [ntContainer#0-3] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-20T20:47:57.100+05:30  INFO 34248 --- [PastData] [ntContainer#0-3] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@4467559e: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-20T20:47:57.121+05:30  INFO 34248 --- [PastData] [ntContainer#0-4] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-20T20:47:57.163+05:30 ERROR 34248 --- [PastData] [ntContainer#0-4] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-20T20:47:57.165+05:30  INFO 34248 --- [PastData] [ntContainer#0-4] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-20T20:48:02.229+05:30  WARN 34248 --- [PastData] [ntContainer#0-4] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-20T20:48:02.246+05:30  INFO 34248 --- [PastData] [ntContainer#0-4] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@4ab7122f: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-20T20:48:02.256+05:30  INFO 34248 --- [PastData] [ntContainer#0-5] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-20T20:48:03.002+05:30  INFO 34248 --- [PastData] [ntContainer#0-5] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3b5950f:7/SimpleConnection@268ba8a2 [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=64271]
+2026-02-20T20:54:40.341+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@64de8e10 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T01:55:42.078+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3f4b60c7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:29.324+05:30  WARN 34248 --- [PastData] [06.140.228:5672] c.r.c.impl.ForgivingExceptionHandler     : An unexpected connection driver error occurred (Exception message: Connection reset)
+2026-02-21T02:55:29.764+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@202ec20d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:29.791+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m59s526ms878µs).
+2026-02-21T02:55:30.816+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7777f56b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:30.818+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@211f6f22 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:30.821+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@62b88b22 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:30.827+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@14c3a0df (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:30.832+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5cd7d381 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:30.836+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@66bd146 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:30.839+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@202cab32 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:30.842+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@29e022b0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:30.844+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4bc9a7d6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-21T02:55:31.837+05:30  WARN 34248 --- [PastData] [ntContainer#0-5] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+com.rabbitmq.client.ShutdownSignalException: connection error
+	at com.rabbitmq.client.impl.AMQConnection.startShutdown(AMQConnection.java:1014) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.shutdown(AMQConnection.java:1004) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.handleFailure(AMQConnection.java:808) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.access$500(AMQConnection.java:49) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:703) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291) ~[na:na]
+	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:325) ~[na:na]
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:312) ~[na:na]
+	at java.base/java.io.DataInputStream.readUnsignedByte(DataInputStream.java:295) ~[na:na]
+	at com.rabbitmq.client.impl.Frame.readFrom(Frame.java:92) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.SocketFrameHandler.readFrame(SocketFrameHandler.java:199) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:694) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	... 1 common frames omitted
+
+2026-02-21T02:55:31.890+05:30  INFO 34248 --- [PastData] [ntContainer#0-5] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@4e4e174: tags=[[amq.ctag-ovsJ-UWyrekiFfPLdTHY9g]], channel=Cached Rabbit Channel: AMQChannel(amqp://htcdtztc@15.206.140.228:5672/htcdtztc,1), conn: Proxy@160e6384 Shared Rabbit Connection: SimpleConnection@268ba8a2 [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=64271], acknowledgeMode=AUTO local queue size=0
+2026-02-21T02:55:32.129+05:30  INFO 34248 --- [PastData] [ntContainer#0-6] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-21T02:55:32.154+05:30 ERROR 34248 --- [PastData] [ntContainer#0-6] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: No such host is known (puffin.rmq2.cloudamqp.com)
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createBareChannel(CachingConnectionFactory.java:682) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getCachedChannelProxy(CachingConnectionFactory.java:655) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getChannel(CachingConnectionFactory.java:544) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory$ChannelCachingConnectionProxy.createChannel(CachingConnectionFactory.java:1509) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2243) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2213) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2193) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueInfo(RabbitAdmin.java:472) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueProperties(RabbitAdmin.java:456) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.attemptDeclarations(AbstractMessageListenerContainer.java:1959) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.redeclareElementsIfNecessary(AbstractMessageListenerContainer.java:1923) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1523) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: No such host is known (puffin.rmq2.cloudamqp.com)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method) ~[na:na]
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52) ~[na:na]
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211) ~[na:na]
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828) ~[na:na]
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 15 common frames omitted
+
+2026-02-21T02:55:32.181+05:30  INFO 34248 --- [PastData] [ntContainer#0-6] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-21T04:12:20.871+05:30  WARN 34248 --- [PastData] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Pool is empty, failed to create/setup connection (06c991b2-13bd-4bba-8e06-7569808978ee)
+
+org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:385) ~[postgresql-42.7.9.jar!/:42.7.9]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57) ~[postgresql-42.7.9.jar!/:42.7.9]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.9.jar!/:42.7.9]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.9.jar!/:42.7.9]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.9.jar!/:42.7.9]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar!/:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar!/:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar!/:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar!/:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: ep-aged-moon-a1bpj2gh-pooler.ap-southeast-1.aws.neon.tech
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:567) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:261) ~[postgresql-42.7.9.jar!/:42.7.9]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:122) ~[postgresql-42.7.9.jar!/:42.7.9]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:146) ~[postgresql-42.7.9.jar!/:42.7.9]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289) ~[postgresql-42.7.9.jar!/:42.7.9]
+	... 14 common frames omitted
+
+2026-02-21T04:12:20.891+05:30  WARN 34248 --- [PastData] [ntContainer#0-6] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-21T04:12:20.942+05:30  INFO 34248 --- [PastData] [ntContainer#0-6] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@634c793d: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-21T04:12:20.980+05:30  INFO 34248 --- [PastData] [ntContainer#0-7] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-21T04:12:21.021+05:30 ERROR 34248 --- [PastData] [ntContainer#0-7] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-21T04:12:21.023+05:30  INFO 34248 --- [PastData] [ntContainer#0-7] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-21T04:12:26.071+05:30  WARN 34248 --- [PastData] [ntContainer#0-7] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-21T04:12:26.149+05:30  INFO 34248 --- [PastData] [ntContainer#0-7] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@41c0fc2: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-21T04:12:26.222+05:30  INFO 34248 --- [PastData] [ntContainer#0-8] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-21T04:12:26.238+05:30 ERROR 34248 --- [PastData] [ntContainer#0-8] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-21T04:12:26.238+05:30  INFO 34248 --- [PastData] [ntContainer#0-8] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-21T04:12:31.405+05:30  WARN 34248 --- [PastData] [ntContainer#0-8] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-21T04:12:31.409+05:30  INFO 34248 --- [PastData] [ntContainer#0-8] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@a1d8153: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-21T04:12:31.452+05:30  INFO 34248 --- [PastData] [ntContainer#0-9] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-21T04:12:31.585+05:30  INFO 34248 --- [PastData] [ntContainer#0-9] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3b5950f:14/SimpleConnection@1635315e [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=63960]
+2026-02-22T03:04:19.028+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1d8m59s926ms707µs300ns).
+2026-02-22T03:04:22.179+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1370be08 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:22.353+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7e9dbfa5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:27.610+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@78ec40b7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:27.831+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6e7a315c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:27.900+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3ff87566 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:27.976+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2c8b85ab (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:28.043+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@36789175 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:28.106+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@937b637 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:28.175+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7598b132 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:28.252+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@54ec4f7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T03:04:34.102+05:30  WARN 34248 --- [PastData] [06.140.228:5672] c.r.c.impl.ForgivingExceptionHandler     : An unexpected connection driver error occurred (Exception message: Connection reset)
+2026-02-22T03:04:34.555+05:30  WARN 34248 --- [PastData] [ntContainer#0-9] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+com.rabbitmq.client.ShutdownSignalException: connection error
+	at com.rabbitmq.client.impl.AMQConnection.startShutdown(AMQConnection.java:1014) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.shutdown(AMQConnection.java:1004) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.handleFailure(AMQConnection.java:808) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.access$500(AMQConnection.java:49) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:703) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291) ~[na:na]
+	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:325) ~[na:na]
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:312) ~[na:na]
+	at java.base/java.io.DataInputStream.readUnsignedByte(DataInputStream.java:295) ~[na:na]
+	at com.rabbitmq.client.impl.Frame.readFrom(Frame.java:92) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.SocketFrameHandler.readFrame(SocketFrameHandler.java:199) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:694) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	... 1 common frames omitted
+
+2026-02-22T03:04:34.559+05:30  INFO 34248 --- [PastData] [ntContainer#0-9] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@32a540b9: tags=[[amq.ctag-41Upx8S4uhbrRLRQ2AhgkA]], channel=Cached Rabbit Channel: AMQChannel(amqp://htcdtztc@15.206.140.228:5672/htcdtztc,1), conn: Proxy@160e6384 Shared Rabbit Connection: SimpleConnection@1635315e [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=63960], acknowledgeMode=AUTO local queue size=0
+2026-02-22T03:04:34.659+05:30  INFO 34248 --- [PastData] [tContainer#0-10] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T03:04:35.534+05:30  INFO 34248 --- [PastData] [tContainer#0-10] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3b5950f:15/SimpleConnection@3b3e49e4 [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=64722]
+2026-02-22T04:13:35.713+05:30  WARN 34248 --- [PastData] [06.140.228:5672] c.r.c.impl.ForgivingExceptionHandler     : An unexpected connection driver error occurred (Exception message: Connection reset)
+2026-02-22T04:13:37.182+05:30  WARN 34248 --- [PastData] [tContainer#0-10] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+com.rabbitmq.client.ShutdownSignalException: connection error
+	at com.rabbitmq.client.impl.AMQConnection.startShutdown(AMQConnection.java:1014) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.shutdown(AMQConnection.java:1004) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.handleFailure(AMQConnection.java:808) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.access$500(AMQConnection.java:49) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:703) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291) ~[na:na]
+	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:325) ~[na:na]
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:312) ~[na:na]
+	at java.base/java.io.DataInputStream.readUnsignedByte(DataInputStream.java:295) ~[na:na]
+	at com.rabbitmq.client.impl.Frame.readFrom(Frame.java:92) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.SocketFrameHandler.readFrame(SocketFrameHandler.java:199) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:694) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	... 1 common frames omitted
+
+2026-02-22T04:13:37.366+05:30  INFO 34248 --- [PastData] [tContainer#0-10] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@38f2ed3e: tags=[[amq.ctag-oExP-ZxWu1go65SxpC7q7Q]], channel=Cached Rabbit Channel: AMQChannel(amqp://htcdtztc@15.206.140.228:5672/htcdtztc,1), conn: Proxy@160e6384 Shared Rabbit Connection: SimpleConnection@3b3e49e4 [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=64722], acknowledgeMode=AUTO local queue size=0
+2026-02-22T04:13:37.484+05:30  INFO 34248 --- [PastData] [tContainer#0-11] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T04:13:37.518+05:30 ERROR 34248 --- [PastData] [tContainer#0-11] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: No such host is known (puffin.rmq2.cloudamqp.com)
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createBareChannel(CachingConnectionFactory.java:682) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getCachedChannelProxy(CachingConnectionFactory.java:655) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getChannel(CachingConnectionFactory.java:544) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory$ChannelCachingConnectionProxy.createChannel(CachingConnectionFactory.java:1509) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2243) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2213) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2193) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueInfo(RabbitAdmin.java:472) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueProperties(RabbitAdmin.java:456) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.attemptDeclarations(AbstractMessageListenerContainer.java:1959) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.redeclareElementsIfNecessary(AbstractMessageListenerContainer.java:1923) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1523) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: No such host is known (puffin.rmq2.cloudamqp.com)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method) ~[na:na]
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52) ~[na:na]
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211) ~[na:na]
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828) ~[na:na]
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 15 common frames omitted
+
+2026-02-22T04:13:37.651+05:30  INFO 34248 --- [PastData] [tContainer#0-11] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T05:43:55.152+05:30  WARN 34248 --- [PastData] [tContainer#0-11] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-22T05:43:55.723+05:30  INFO 34248 --- [PastData] [tContainer#0-11] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@941de05: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-22T05:43:55.831+05:30  INFO 34248 --- [PastData] [tContainer#0-12] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T05:43:55.959+05:30 ERROR 34248 --- [PastData] [tContainer#0-12] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-22T05:43:55.960+05:30  INFO 34248 --- [PastData] [tContainer#0-12] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T05:44:01.160+05:30  WARN 34248 --- [PastData] [tContainer#0-12] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-22T05:44:01.291+05:30  INFO 34248 --- [PastData] [tContainer#0-12] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@48cabfdd: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-22T05:44:01.525+05:30  INFO 34248 --- [PastData] [tContainer#0-13] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T05:44:01.529+05:30 ERROR 34248 --- [PastData] [tContainer#0-13] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-22T05:44:01.586+05:30  INFO 34248 --- [PastData] [tContainer#0-13] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T05:44:54.698+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h32m2s258ms604µs).
+2026-02-22T05:44:54.708+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5be4b828 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.007+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@407bc225 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.033+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7d84efde (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.129+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3df3dbe (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.155+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@20b692b0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:54.771+05:30  WARN 34248 --- [PastData] [tContainer#0-13] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-22T05:44:55.238+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3e421669 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.240+05:30  INFO 34248 --- [PastData] [tContainer#0-13] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@27e8115c: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-22T05:44:55.242+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@64e2e460 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.244+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1e2a078f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.246+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@a9d35e8 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.255+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@24c28b8c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T05:44:55.812+05:30  INFO 34248 --- [PastData] [tContainer#0-14] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T05:44:56.192+05:30  INFO 34248 --- [PastData] [tContainer#0-14] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3b5950f:22/SimpleConnection@70124420 [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=63223]
+2026-02-22T14:30:04.249+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8h45m20s142ms73µs300ns).
+2026-02-22T14:30:04.525+05:30  WARN 34248 --- [PastData] [06.140.228:5672] c.r.c.impl.ForgivingExceptionHandler     : An unexpected connection driver error occurred (Exception message: Connection reset)
+2026-02-22T14:30:04.961+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@57f0aa90 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:05.019+05:30  WARN 34248 --- [PastData] [tContainer#0-14] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+com.rabbitmq.client.ShutdownSignalException: connection error
+	at com.rabbitmq.client.impl.AMQConnection.startShutdown(AMQConnection.java:1014) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.shutdown(AMQConnection.java:1004) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.handleFailure(AMQConnection.java:808) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.access$500(AMQConnection.java:49) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:703) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291) ~[na:na]
+	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:325) ~[na:na]
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:312) ~[na:na]
+	at java.base/java.io.DataInputStream.readUnsignedByte(DataInputStream.java:295) ~[na:na]
+	at com.rabbitmq.client.impl.Frame.readFrom(Frame.java:92) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.SocketFrameHandler.readFrame(SocketFrameHandler.java:199) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:694) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	... 1 common frames omitted
+
+2026-02-22T14:30:05.039+05:30  INFO 34248 --- [PastData] [tContainer#0-14] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@75aa3bdc: tags=[[amq.ctag-MTSDyfgF1316sWQZbc1U-Q]], channel=Cached Rabbit Channel: AMQChannel(amqp://htcdtztc@15.206.140.228:5672/htcdtztc,1), conn: Proxy@160e6384 Shared Rabbit Connection: SimpleConnection@70124420 [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=63223], acknowledgeMode=AUTO local queue size=0
+2026-02-22T14:30:05.031+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7af98d36 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:05.832+05:30  INFO 34248 --- [PastData] [tContainer#0-15] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:05.832+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4a57e70e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:05.834+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@18a170fe (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:06.047+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@471a2e5d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:06.048+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@71bc8bb5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:06.054+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4a67d1b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:06.195+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1713dbf1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:06.292+05:30 ERROR 34248 --- [PastData] [tContainer#0-15] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: No such host is known (puffin.rmq2.cloudamqp.com)
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createBareChannel(CachingConnectionFactory.java:682) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getCachedChannelProxy(CachingConnectionFactory.java:655) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getChannel(CachingConnectionFactory.java:544) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory$ChannelCachingConnectionProxy.createChannel(CachingConnectionFactory.java:1509) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2243) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2213) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2193) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueInfo(RabbitAdmin.java:472) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueProperties(RabbitAdmin.java:456) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.attemptDeclarations(AbstractMessageListenerContainer.java:1959) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.redeclareElementsIfNecessary(AbstractMessageListenerContainer.java:1923) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1523) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: No such host is known (puffin.rmq2.cloudamqp.com)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method) ~[na:na]
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52) ~[na:na]
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211) ~[na:na]
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828) ~[na:na]
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 15 common frames omitted
+
+2026-02-22T14:30:06.328+05:30  INFO 34248 --- [PastData] [tContainer#0-15] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:06.334+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1ed6788 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:06.363+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1499a523 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:30:11.377+05:30  WARN 34248 --- [PastData] [tContainer#0-15] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-22T14:30:20.364+05:30  INFO 34248 --- [PastData] [tContainer#0-15] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@46de9b49: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-22T14:30:20.377+05:30  INFO 34248 --- [PastData] [tContainer#0-16] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:22.739+05:30  INFO 34248 --- [PastData] [tContainer#0-16] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3b5950f:25/SimpleConnection@2557ad9e [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=59131]
+2026-02-22T14:30:31.044+05:30  WARN 34248 --- [PastData] [06.140.228:5672] c.r.c.impl.ForgivingExceptionHandler     : An unexpected connection driver error occurred (Exception message: Connection reset)
+2026-02-22T14:30:31.500+05:30  WARN 34248 --- [PastData] [tContainer#0-16] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+com.rabbitmq.client.ShutdownSignalException: connection error
+	at com.rabbitmq.client.impl.AMQConnection.startShutdown(AMQConnection.java:1014) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.shutdown(AMQConnection.java:1004) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.handleFailure(AMQConnection.java:808) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection.access$500(AMQConnection.java:49) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:703) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291) ~[na:na]
+	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:325) ~[na:na]
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:312) ~[na:na]
+	at java.base/java.io.DataInputStream.readUnsignedByte(DataInputStream.java:295) ~[na:na]
+	at com.rabbitmq.client.impl.Frame.readFrom(Frame.java:92) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.SocketFrameHandler.readFrame(SocketFrameHandler.java:199) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:694) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	... 1 common frames omitted
+
+2026-02-22T14:30:33.189+05:30  INFO 34248 --- [PastData] [tContainer#0-16] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@4d9a6c9e: tags=[[amq.ctag-Ljue3qF-dvYXlnVYqqb3VQ]], channel=Cached Rabbit Channel: AMQChannel(amqp://htcdtztc@15.206.140.228:5672/htcdtztc,1), conn: Proxy@160e6384 Shared Rabbit Connection: SimpleConnection@2557ad9e [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=59131], acknowledgeMode=AUTO local queue size=0
+2026-02-22T14:30:33.330+05:30  INFO 34248 --- [PastData] [tContainer#0-17] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:36.154+05:30 ERROR 34248 --- [PastData] [tContainer#0-17] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+
+org.springframework.amqp.AmqpIOException: java.net.SocketException: Network is unreachable: getsockopt
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createBareChannel(CachingConnectionFactory.java:682) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getCachedChannelProxy(CachingConnectionFactory.java:655) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.getChannel(CachingConnectionFactory.java:544) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory$ChannelCachingConnectionProxy.createChannel(CachingConnectionFactory.java:1509) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2243) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2213) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2193) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueInfo(RabbitAdmin.java:472) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueProperties(RabbitAdmin.java:456) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.attemptDeclarations(AbstractMessageListenerContainer.java:1959) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.redeclareElementsIfNecessary(AbstractMessageListenerContainer.java:1923) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1523) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Network is unreachable: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:61) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1355) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 15 common frames omitted
+
+2026-02-22T14:30:41.728+05:30  INFO 34248 --- [PastData] [tContainer#0-17] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:46.945+05:30  WARN 34248 --- [PastData] [tContainer#0-17] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.SocketException: Network is unreachable: getsockopt
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Network is unreachable: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:61) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1355) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-22T14:30:46.999+05:30  INFO 34248 --- [PastData] [tContainer#0-17] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@63d8888d: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-22T14:30:47.261+05:30  INFO 34248 --- [PastData] [tContainer#0-18] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:47.732+05:30 ERROR 34248 --- [PastData] [tContainer#0-18] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-22T14:30:47.766+05:30  INFO 34248 --- [PastData] [tContainer#0-18] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:52.774+05:30  WARN 34248 --- [PastData] [tContainer#0-18] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.SocketException: Network is unreachable: getsockopt
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Network is unreachable: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:61) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1355) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-22T14:30:52.811+05:30  INFO 34248 --- [PastData] [tContainer#0-18] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@5c833f: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-22T14:30:53.009+05:30  INFO 34248 --- [PastData] [tContainer#0-19] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:53.013+05:30 ERROR 34248 --- [PastData] [tContainer#0-19] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-22T14:30:53.014+05:30  INFO 34248 --- [PastData] [tContainer#0-19] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:58.044+05:30  WARN 34248 --- [PastData] [tContainer#0-19] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-22T14:30:58.143+05:30  INFO 34248 --- [PastData] [tContainer#0-19] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@7193a20f: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-22T14:30:58.291+05:30  INFO 34248 --- [PastData] [tContainer#0-20] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:30:58.464+05:30 ERROR 34248 --- [PastData] [tContainer#0-20] o.s.a.r.l.SimpleMessageListenerContainer : Failed to check/redeclare auto-delete queue(s).
+2026-02-22T14:30:58.464+05:30  INFO 34248 --- [PastData] [tContainer#0-20] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:31:03.613+05:30  WARN 34248 --- [PastData] [tContainer#0-20] o.s.a.r.l.SimpleMessageListenerContainer : Consumer raised exception, processing can restart if the connection factory supports it
+
+org.springframework.amqp.AmqpIOException: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:69) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:629) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:745) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:256) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils$RabbitResourceFactory.createConnection(ConnectionFactoryUtils.java:330) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.doGetTransactionalResourceHolder(ConnectionFactoryUtils.java:139) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:100) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.getTransactionalResourceHolder(ConnectionFactoryUtils.java:83) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.BlockingQueueConsumer.start(BlockingQueueConsumer.java:631) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1524) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1356) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.UnknownHostException: puffin.rmq2.cloudamqp.com
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.resolveIpAddresses(DnsRecordIpAddressResolver.java:83) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.DnsRecordIpAddressResolver.getAddresses(DnsRecordIpAddressResolver.java:73) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1351) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1297) ~[amqp-client-5.27.1.jar!/:5.27.1]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:676) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:644) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:590) ~[spring-rabbit-4.0.2.jar!/:4.0.2]
+	... 10 common frames omitted
+
+2026-02-22T14:31:03.717+05:30  INFO 34248 --- [PastData] [tContainer#0-20] o.s.a.r.l.SimpleMessageListenerContainer : Restarting Consumer@154ed53: tags=[[]], channel=null, acknowledgeMode=AUTO local queue size=0
+2026-02-22T14:31:03.803+05:30  INFO 34248 --- [PastData] [tContainer#0-21] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [puffin.rmq2.cloudamqp.com:5672]
+2026-02-22T14:31:08.141+05:30  INFO 34248 --- [PastData] [tContainer#0-21] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#3b5950f:34/SimpleConnection@1db8a83f [delegate=amqp://htcdtztc@15.206.140.228:5672/htcdtztc, localPort=60608]
+2026-02-22T14:32:15.663+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@23e05c0e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-02-22T14:32:51.265+05:30  WARN 34248 --- [PastData] [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@409e343b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
