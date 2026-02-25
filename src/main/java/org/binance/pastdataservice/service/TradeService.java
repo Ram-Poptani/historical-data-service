@@ -6,6 +6,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Timer;
 import org.binance.pastdataservice.model.dto.request.CreateTradeDto;
 import org.binance.pastdataservice.model.dto.response.CandleDto;
 import org.binance.pastdataservice.model.entity.Trade;
@@ -20,10 +22,33 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class TradeService {
     private final TradeRepository tradeRepository;
     private final CacheManager cacheManager;
+
+//    Metrics
+    private final Timer aggregateTradesTimer;
+    private final Counter cacheHitCounter;
+    private final Counter cacheMissCounter;
+
+    public TradeService(
+            TradeRepository tradeRepository,
+            CacheManager cacheManager,
+            MeterRegistry meterRegistry
+    ) {
+        this.tradeRepository = tradeRepository;
+        this.cacheManager = cacheManager;
+        this.aggregateTradesTimer = Timer.builder("pastdata.candle.query.duration")
+                .description("Duration of candlestick aggregation queries")
+                .register(meterRegistry);
+        this.cacheHitCounter = Counter.builder("pastdata.cache.hits")
+                .description("Number of cache hits for candle queries")
+                .register(meterRegistry);
+        this.cacheMissCounter = Counter.builder("pastdata.cache.misses")
+                .description("Number of cache misses for candle queries")
+                .register(meterRegistry);
+    }
 
     public String insert(CreateTradeDto createTradeDto) {
         return tradeRepository.save(createTradeDto.toEntity()).getId();
@@ -56,28 +81,33 @@ public class TradeService {
         if (cache != null) {
             Cache.ValueWrapper cachedValue = cache.get(cacheKey);
             if (cachedValue != null) {
+                cacheHitCounter.increment();
                 log.info("Cache hit for key: {}", cacheKey);
                 return (List<CandleDto>) cachedValue.get();
             } else {
+                cacheMissCounter.increment();
                 log.info("Cache miss for key: {}", cacheKey);
             }
         }
 
 
 
-        List<CandleDto> result =  tradeRepository.findCandlesBySymbolAndTimeRange(symbol, fromEpochRounded, toEpochRounded, tickSizeMs)
-                .stream()
-                .map(p -> CandleDto.builder()
-                        .openTime(p.getOpenTime())
-                        .closeTime(p.getOpenTime() + tickSizeMs - 1)
-                        .open(p.getOpen())
-                        .high(p.getHigh())
-                        .low(p.getLow())
-                        .close(p.getClose())
-                        .volume(p.getVolume())
-                        .tradeCount((int) p.getTradeCount())
-                        .build())
-                .collect(Collectors.toList());
+        List<TradeRepository.CandleProjection> data = aggregateTradesTimer.record(() ->
+                tradeRepository.findCandlesBySymbolAndTimeRange(symbol, fromEpochRounded, toEpochRounded, tickSizeMs)
+        );
+
+        List<CandleDto> result = data.stream()
+                                        .map(p -> CandleDto.builder()
+                                                .openTime(p.getOpenTime())
+                                                .closeTime(p.getOpenTime() + tickSizeMs - 1)
+                                                .open(p.getOpen())
+                                                .high(p.getHigh())
+                                                .low(p.getLow())
+                                                .close(p.getClose())
+                                                .volume(p.getVolume())
+                                                .tradeCount((int) p.getTradeCount())
+                                                .build())
+                                        .collect(Collectors.toList());
         cache.put(cacheKey, result);
         return result;
     }
