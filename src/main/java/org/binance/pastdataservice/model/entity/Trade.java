@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "trades", indexes = {
-    @Index(name = "idx_symbol", columnList = "symbol")
-})
+    @Index(name = "idx_symbol_tradetime", columnList = "symbol, tradeTime")}
+)
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
