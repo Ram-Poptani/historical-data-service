@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import org.binance.pastdataservice.model.dto.request.CreateTradeDto;
 import org.binance.pastdataservice.model.dto.response.CandleDto;
