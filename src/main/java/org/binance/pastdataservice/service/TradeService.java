@@ -26,7 +26,6 @@ public class TradeService {
         return tradeRepository.save(createTradeDto.toEntity()).getId();
     }
 
-    @CacheEvict(value = "candles", allEntries = true)
     @Transactional
     public void insertBatch(List<CreateTradeDto> dtos) {
         List<Trade> trades = dtos.stream()
