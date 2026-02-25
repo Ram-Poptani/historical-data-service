@@ -63,8 +63,9 @@ public class TradeService {
 
         // Filter out zero-price trades (defensive — may exist from before WebConsumer fix)
         List<Trade> validTrades = trades.stream()
-                .filter(t -> t.getPrice() > 0 && t.getQuantity() > 0)
-                .toList();
+                                        .filter(Trade::isPriceGt0)
+                                        .filter(Trade::isQuantityNot0)
+                                        .toList();
 
         if (validTrades.isEmpty()) {
             return Collections.emptyList();

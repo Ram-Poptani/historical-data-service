@@ -46,4 +46,12 @@ public class Trade {
 
     @Column(nullable = false)
     private long tradeTime;
+
+    public static boolean isPriceGt0(Trade trade) {
+        return trade.getPrice() > 0;
+    }
+
+    public static boolean isQuantityNot0(Trade trade) {
+        return trade.getQuantity() != 0;
+    }
 }
