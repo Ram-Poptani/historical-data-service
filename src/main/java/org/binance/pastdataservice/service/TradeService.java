@@ -2,6 +2,7 @@ package org.binance.pastdataservice.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,8 +10,8 @@ import org.binance.pastdataservice.model.dto.request.CreateTradeDto;
 import org.binance.pastdataservice.model.dto.response.CandleDto;
 import org.binance.pastdataservice.model.entity.Trade;
 import org.binance.pastdataservice.repository.TradeRepository;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class TradeService {
     private final TradeRepository tradeRepository;
+    private final CacheManager cacheManager;
+
     public String insert(CreateTradeDto createTradeDto) {
         return tradeRepository.save(createTradeDto.toEntity()).getId();
     }
@@ -36,18 +39,33 @@ public class TradeService {
     }
 
 
-    @Cacheable(value = "candles", key = "#symbol + '-' + #from.toString() + '-' + #to.toString() + '-' + #tickSize")
     public List<CandleDto> findBySymbolAndFilters(
             String symbol,
             LocalDateTime from,
             LocalDateTime to,
             String tickSize
     ) {
-        long fromEpoch = from.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
-        long toEpoch = to.atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
+
+        long fromEpochRounded = from.truncatedTo(ChronoUnit.HOURS).atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
+        long toEpochRounded = to.truncatedTo(ChronoUnit.HOURS).plusHours(1).minusNanos(1).atZone(ZoneId.of("UTC")).toInstant().toEpochMilli();
         long tickSizeMs = parseTickSize(tickSize);
 
-        return tradeRepository.findCandlesBySymbolAndTimeRange(symbol, fromEpoch, toEpoch, tickSizeMs)
+        String cacheKey = symbol + "-" + from.toString() + "-" + to.toString() + "-" + tickSize;
+
+        Cache cache = cacheManager.getCache("candles");
+        if (cache != null) {
+            Cache.ValueWrapper cachedValue = cache.get(cacheKey);
+            if (cachedValue != null) {
+                log.info("Cache hit for key: {}", cacheKey);
+                return (List<CandleDto>) cachedValue.get();
+            } else {
+                log.info("Cache miss for key: {}", cacheKey);
+            }
+        }
+
+
+
+        List<CandleDto> result =  tradeRepository.findCandlesBySymbolAndTimeRange(symbol, fromEpochRounded, toEpochRounded, tickSizeMs)
                 .stream()
                 .map(p -> CandleDto.builder()
                         .openTime(p.getOpenTime())
@@ -60,6 +78,8 @@ public class TradeService {
                         .tradeCount((int) p.getTradeCount())
                         .build())
                 .collect(Collectors.toList());
+        cache.put(cacheKey, result);
+        return result;
     }
 
 
